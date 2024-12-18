@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Menu untuk {{ restaurant.name }}</h1>
+<div class="menu-cards">
+    {% if menu_items %}
+        {% for item in menu_items %}
+        <div class="restaurant-cards">
+            <div class="card">
+                <img src="{{ item.image_url_menu }}" alt="Foto {{ item.name }}">
+                <h2>{{ item.name }}</h2>
+                <p>{{ item.description }}</p>
+                <p class="price">Rp{{ item.price }}</p>
+                
+                <div class="button-container">
+                    <!-- Jenis Makanan -->
+                    <div class="custom-button meal-type">
+                        <div class="button-text">{{ item.meal_type }}</div>
+                    </div>
+                    
+                    <!-- Button Pesan -->
+                    <div class="custom-button a">
+                        <a href="{% url 'manajemen_pesanan:create_order' item.id %}" class="button-text">Pesan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-data">Belum ada data menu.</p>
+    {% endif %}
+</div>
+<a href="{% url 'cards_makanan:restaurant_list' %}" class="back-link">Kembali ke daftar restoran</a>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #e8dcd4;
+        color: #3d200a;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 20px;
+        font-size: 2em;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background: linear-gradient(to right, #927155, #e2c7b3);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .menu-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .card {
+        border: 2px solid #cbbcb5;
+        border-radius: 8px;
+        padding: 15px;
+        width: 200px;
+        height: 330px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        background-color: #fff;
+        transition: transform 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        position: relative;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .card h2 {
+        color: #927155;
+        font-size: 18px;
+        margin-bottom: 1px;
+    }
+
+    .card p {
+        margin: 1px 0;
+        font-size: 14px;
+        color: #8B4513;
+    }
+
+    .card .price {
+        font-weight: bold;
+        color: #654a2d;
+    }
+
+    .custom-button {
+        width: 80px;
+        height: 35px;
+        border-radius: 100px;
+        border: 2px solid #8B4513;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .custom-button:hover {
+        background-color: #8B4513;
+    }
+
+    .button-text {
+        color: #8B4513;
+        font-size: 0.9rem;
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .custom-button:hover .button-text {
+        color: #fff;
+    }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        font-weight: bold;
+        color: #5d4d3b;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    .no-data {
+        text-align: center;
+        color: #654a2d;
+        font-size: 1.2em;
+        margin-top: 20px;
+    }
+    .custom-button.a {
+    position: absolute; /* Tetap menggunakan posisi absolut */
+    bottom: 10px; /* Jarak dari bawah, sama dengan tombol kategori */
+    left: 100px; /* Mengubah posisi ke kanan */
+    width: 80px;  /* Sesuaikan lebar jika perlu */
+    height: 35px; /* Tinggi tombol */
+    border-radius: 100px; /* Sudut melengkung */
+    border: 2px solid #8B4513; /* Warna border */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+</style>
+{% endblock %}
